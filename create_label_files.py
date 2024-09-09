@@ -151,9 +151,17 @@ if __name__ == "__main__":
    
             thresh = cv2.threshold(image_mask, 30, 255, cv2.THRESH_BINARY)[1]
     
-            _, contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                                              cv2.CHAIN_APPROX_SIMPLE)
-            cnt = max(contours, key=cv2.contourArea)
+            contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,        ##ND
+                                              cv2.CHAIN_APPROX_SIMPLE)              ##ND
+            # _, contours, _ = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,   ##ND
+            #                                   cv2.CHAIN_APPROX_SIMPLE)            ##ND
+            ##ND Changes start here
+            try:
+                cnt = max(contours, key=cv2.contourArea)
+            except:
+                pass
+            ##ND Changes end here
+            # cnt = max(contours, key=cv2.contourArea)      ##ND
     
             image_mask = np.zeros(img.shape[:2],dtype = np.uint8)
             cv2.drawContours(image_mask, [cnt], -1, 255, -1)
